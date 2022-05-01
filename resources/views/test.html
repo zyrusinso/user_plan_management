@@ -1,0 +1,70 @@
+<div class="register_right">
+    <div class="reg_log_tabs flex">
+        <p onclick="window.location = '/login'">Log In</p>
+        <p onclick="window.location = '/registration'" class="active">Registration</p>
+    </div>
+
+
+    <h1>Create new Account</h1>
+
+    <form class="form-wrapper" method="post" action="/registration" >
+        <input type="hidden" name="form_token" value="5686d1f700dcadb3025ae9d3088e69ce">
+        <input type="hidden" name="page_from" value="/registration"> <input type="hidden" name="a" value="do_signup">
+        <div class="inputs">
+
+            <div class="input">
+                <img src="/assets/img/reg_mail.svg" alt="">
+                <input type="text" value="" name="input_login" id="input_login" class="login" required=""
+                    placeholder="Login">
+            </div>
+            <div class="input">
+                <img src="/assets/img/reg_mail.svg" alt="">
+                <input type="email" value="" name="input_email" id="input_email" class="email" required=""
+                    placeholder="Email">
+            </div>
+            <div class="input">
+                <img src="/assets/img/reg_pass.svg" alt="">
+                <input type="password" value="" id="input_pass" name="input_pass" class="password" required=""
+                    placeholder="Password">
+            </div>
+            <div class="input">
+                <img src="/assets/img/reg_pass.svg" alt="">
+                <input type="password" value="" id="input_pass2" name="input_pass2" class="password" required=""
+                    placeholder="Repeat password">
+            </div>
+            <div class="input">
+                <input type="text" class="form-control" value="No upline" disabled="">
+            </div>
+            <div class="input" style="position:relative;">
+                <img src="/assets/img/icon_code.png" alt="">
+                <img style="padding-bottom:15px;margin-left:2px;width:auto;position:absolute;top:63%;left:auto;right:0px;"
+                    src="/captcha.php?40a88095bcdc227a1be0276ea52b528b">
+                <input type="text" value="" name="input_captcha" id="input_captcha" class="input_captcha" required=""
+                    placeholder="Code">
+            </div>
+        </div>
+
+        <div class="check_flex flex" style="margin: 0 auto 50px;">
+            <div class="agree">
+                <div class="checkbox">
+                    <input type="checkbox" name="accept_rules" id="agree" checked="">
+                    <label for="agree">
+                        <span>
+                            <img src="/assets/img/agree.png" alt="">
+                        </span>
+                    </label>
+                </div>
+                <p>I read it and agree with<a href="/terms" target="_blank">Terms and conditions</a></p>
+            </div>
+        </div>
+
+        <div class="reg_btns">
+            <a href="/" class="btn_reg_back">Return to website</a>
+            <button type="submit" class="btn_blue" id="btnreg">Create account</button>
+        </div>
+
+
+
+        <div id="errors"></div>
+    </form>
+</div>

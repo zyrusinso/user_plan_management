@@ -1,0 +1,66 @@
+.timer_area{
+	background: #e5ecee;
+	padding-top: 150px;
+	padding-bottom: 150px;
+	.main_title{
+		.main_btn{
+			margin-top: 25px;
+		}
+	}
+}
+.timer_inner{
+	text-align: center;
+	overflow: hidden;
+	h5{
+		font-size: 36px;
+		font-family: $rob;
+		font-weight: bold;
+		margin-bottom: 35px; 
+	}
+	p{
+		font-size: 24px;
+		font-family: $rob;
+		font-weight: bold;
+		margin-bottom: 0px;
+		margin-top: 25px;
+	}
+	.timer{
+		max-width: 560px;
+		margin: auto;
+		background: rgba(255, 255, 255, 1);
+		display: flex;
+		flex-wrap: wrap;
+		position: relative;
+		border-radius: 5px;
+		.timer__section{
+			flex: 0 0 25%;
+			max-width: 25%;
+			padding-top: 30px;
+			padding-bottom: 30px;
+			position: relative;
+			&:before{
+				content: "";
+				height: 40px;
+				width: 1px;
+				background: #eeeeee;
+				position: absolute;
+				right: 0px;
+				top: 50%;
+				transform: translateY(-50%);
+			}
+			.timer__number{
+				font-size: 36px;
+				color: $dip;
+				font-family: $rob;
+				font-weight: 500;
+			}
+			.timer__label{
+				font-size: 14px;
+				font-family: $rob;
+				margin-top: 6px;
+				color: $pfont;
+				text-transform: capitalize;
+			}
+		}
+	}
+}
