@@ -7,7 +7,7 @@
     <link href="{{ asset('newFrontEnd/fonts.googleapis.com/css2.css') }}" rel="stylesheet">
     <title>Company Name</title>
 
-    @if (request()->routeIs('register') || request()->routeIS('login') || request()->routeIs('home'))
+    @if (request()->routeIs('register') || request()->routeIS('login') || request()->routeIs('home') || request()->routeIs('chat') || request()->routeIs('game'))
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
         @livewireStyles
         <script src="{{ mix('js/app.js') }}" defer></script>
@@ -52,7 +52,7 @@
                             @if (!request()->routeIs('/'))
                                 <a href="{{ route('/') }}">Home</a>
                             @endif
-                            <a href="#">About</a>
+                            <a href="{{ route('about-us') }}">About</a>
                             <a href="#">Contacts</a>
                         </div>
 
@@ -65,7 +65,12 @@
                             @if (auth()->user()->is_admin == 1)
                                 <a href="{{ route('dashboard') }}">Dashhboard</a>
                             @endif
-                            <a href="#">About</a>
+                            @if (!request()->routeIs('home'))
+                                <a href="{{ route('/') }}">Home</a>
+                            @endif
+                            <a href="{{ route('chat') }}">Chat</a>
+                            <a href="{{ route('game') }}">Game</a>
+                            <a href="{{ route('about-us') }}">About</a>
                             <a href="#">Contacts</a>
                             <a href="{{ route('logout') }}" 
                                     onclick="event.preventDefault();
@@ -76,8 +81,8 @@
                 </div>
             </div>
             <form method="POST" id="logout-form" action="{{ route('logout') }}">
-                    @csrf
-                </form>
+                @csrf
+            </form>
         </div>
     </div>
 
@@ -95,11 +100,11 @@
             <div class="content">
                 <div class="home_banner_flex">
                     <div class="flex_left">
-                        <h2>Profitable. Trusted. Innovative. Mining. </h2>
-                        <span>Up to 200% in 24 hours - 8.33% per hour</span><br/>
-                        <span>Ref program 10%-2%-1%</span><br/>
+                        <h2>Revolutionary betting investment algorithm</h2>
+                        <span>Invest in betting bonds today for a high reward with a minimal risk.</span><br/>
+                        <span>Investment made easy for everyone.</span><br/>
                         
-                        <span>Sign up bonus 100 USDT</span>
+                        <span>Sign up bonus 15 USDT</span>
                         <a href="{{ route('register') }}" class="btn_blue">Start Earn</a>
                     </div>
 
@@ -107,31 +112,7 @@
                         <div class="bg">
                             <img src="{{ asset('newFrontEnd/assets/img/home_banner_curr.png') }}" alt="">
                         </div>
-                        <img src="{{ asset('newFrontEnd/assets/img/a_page.png') }}" class="h_tablet" alt="">
-                        <div class="item img_bg1">
-                            <div class="curr_icon"></div>
-                            <p class="curr_name">BNB</p>
-                            <h3 class="curr_val"> +12.6%</h3>
-                            <h3 class="curr_arrow">&uarr;</h3>
-                        </div>
-                        <div class="item img_bg2">
-                            <div class="curr_icon"></div>
-                            <p class="curr_name">BNB</p>
-                            <h3 class="curr_val"> +12.6%</h3>
-                            <h3 class="curr_arrow">&uarr;</h3>
-                        </div>
-                        <div class="item img_bg3">
-                            <div class="curr_icon"></div>
-                            <p class="curr_name">BNB</p>
-                            <h3 class="curr_val"> +12.6%</h3>
-                            <h3 class="curr_arrow">&uarr;</h3>
-                        </div>
-                        <div class="item img_bg4">
-                            <div class="curr_icon"></div>
-                            <p class="curr_name">BNB</p>
-                            <h3 class="curr_val"> +12.6%</h3>
-                            <h3 class="curr_arrow">&uarr;</h3>
-                        </div>
+                        <img src="{{ asset('newFrontEnd/assets/img/MainLogo.png') }}" class="h_tablet" alt="">
                     </div>
                 </div>
             </div>
@@ -145,7 +126,7 @@
 
     @endif
 
-    @if (request()->routeIs('register') || request()->routeIS('login') || request()->routeIs('home'))
+    @if (request()->routeIs('register') || request()->routeIS('login') || request()->routeIs('home') || request()->routeIs('chat') || request()->routeIs('game'))
         @livewireScripts
     @endif
 

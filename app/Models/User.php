@@ -74,19 +74,14 @@ class User extends Authenticatable
         ];
     }
 
-    public static function insuranceList(){
-        return [
-            '5' => 'Basic Insurance Plan',
-            '6' => 'Silver Insurance Plan',
-        ];
-    }
-
     public static function planList(){
-        return [
-            '1' => 'Plan A',
-            '2' => 'Plan B',
-            '3' => 'Plan C',
-            '4' => 'Plan D',
-        ];
+        $plan = Plan::all();
+        $data = [];
+
+        foreach($plan as $item){
+            $data += [$item->id => $item->name];
+        }
+
+        return $data;
     }
 }

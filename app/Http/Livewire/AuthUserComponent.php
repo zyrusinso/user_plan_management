@@ -6,13 +6,17 @@ use Livewire\Component;
 use App\Models\Plan;
 use App\Models\Log;
 use App\Models\User;
+use App\Models\UserPlan;
+use App\Models\Insurance;
 
 class AuthUserComponent extends Component
 {
     public $modalFormVisible = false;
     public $planModalFormVisible = false;
-    public $selectedPlanID = 1;
+    public $selectedPlanID;
     public $amount;
+    public $selectedInsuranceID;
+    public $planSelectedForInsurance;
 
     //Validation Rules
     public function rules(){
@@ -23,19 +27,29 @@ class AuthUserComponent extends Component
 
     public function create(){
         $planSelected = Plan::where('id', $this->selectedPlanID)->first();
-
-        if($this->amount < $planSelected->amount){
-            return $this->addError('amount', 'Input amount minimum of '.$planSelected->amount);
-        }
-
-        if($this->amount > auth()->user()->credit){
-            return $this->addError('amount', 'insufficient funds, you only have '.auth()->user()->credit);
-        }
+        $insuranceSelected = Insurance::where('id', $this->planSelectedForInsurance)->first();
         
-        Log::create($this->selectedPlanModel());
-        User::where('id', auth()->user()->id)->update($this->userTopUpModel($planSelected));
+        if(!$this->selectedInsuranceID){
+            if($this->amount < $planSelected->amount){
+                return $this->addError('amount', 'Input amount minimum of '.$planSelected->amount);
+            }
+    
+            if($this->amount > auth()->user()->credit){
+                return $this->addError('amount', 'insufficient funds, you only have '.auth()->user()->credit);
+            }
+
+            Log::create($this->selectedPlanModel());
+            UserPlan::updateOrCreate(['user_id' => auth()->id(), 'plan_id' => $planSelected->id], $this->userPlanModel($planSelected));
+            User::where('id', auth()->user()->id)->update($this->userTopUpModel($planSelected));
+        }else{
+            Log::create($this->selectedPlanModel());
+            UserPlan::where('user_id', auth()->id())->where('plan_id', $this->planSelectedForInsurance)->update($this->userInsuranceModel());
+            User::where('id', auth()->user()->id)->update($this->userTopUpModel($planSelected));
+        }
+
         session()->flash('topUpSuccess', 'Successfully Top Up');
         $this->planModalFormVisible = false;
+        // $this->render();
         return redirect(request()->header('Referer'));
     }
 
@@ -48,15 +62,31 @@ class AuthUserComponent extends Component
         ];
     }
 
+    public function userPlanModel($planSelected){
+        return [
+            'user_id' => auth()->id(),
+            'plan_id' => $this->selectedPlanID,
+            'amount' => (!$planSelected)? $this->amount : $this->userPlan($planSelected)->amount + $this->amount,
+            'plan_credit' => now()->addHours(72),
+            // 'insurance_expired' => '',
+        ];
+    }
+
+    public function userInsuranceModel(){
+        return [
+            'insurance_id' => $this->selectedInsuranceID
+        ];
+    }
+
     public function userTopUpModel($planSelected){
         return [
-            'plan_id' => $planSelected->id,
-            'plan_credit' => now()->addHours($planSelected->credit_time),
-            'plan_amount' => ($planSelected->id != 5 || $planSelected->id != 6)? $this->amount : auth()->user()->plan_amount,
-            'plan_expired' => now()->addHours($planSelected->expired_time),
-            'insurance_expired' => now()->addHours($planSelected->expired_time),
-            'plan_insurance_id' => ($planSelected->id == 5 || $planSelected->id == 6)? $planSelected->id : auth()->user()->plan_insurance_id,
-            'credit' => ($planSelected->id != 5 || $planSelected->id != 6)? auth()->user()->credit-$this->amount : auth()->user()->credit
+            // 'plan_id' => $planSelected->id,
+            // 'plan_credit' => now()->addHours($planSelected->credit_time),
+            // 'plan_amount' => ($planSelected->id != 5 || $planSelected->id != 6)? $this->amount : auth()->user()->plan_amount,
+            // 'plan_expired' => now()->addHours($planSelected->expired_time),
+            // 'insurance_expired' => now()->addHours($planSelected->expired_time),
+            // 'plan_insurance_id' => ($planSelected->id == 5 || $planSelected->id == 6)? $planSelected->id : auth()->user()->plan_insurance_id,
+            'credit' => auth()->user()->credit-$this->amount
         ];
     }
 
@@ -70,12 +100,28 @@ class AuthUserComponent extends Component
         $this->planModalFormVisible = true;
     }
 
+    public function insuranceSelectionShowModal($id){
+        $this->resetValidation();
+        $this->selectedInsuranceID = $id;
+        $this->planModalFormVisible = true;
+    }
+
     public function planSelectedData(){
         return Plan::where('id', $this->selectedPlanID)->first();
     }
 
+    public function creditedUserPlans(){
+        return UserPlan::where('user_id', auth()->user()->id)->get();
+    }
+
+    public function userPlan($planSelected){
+        return UserPlan::where('user_id', auth()->user()->id)->where('plan_id', $planSelected->id)->first();
+    }
+
     public function render()
     {
-        return view('livewire.auth-user-component')->layout('layouts.frontend');
+        return view('livewire.auth-user-component', [
+            'creditedUserPlans' => $this->creditedUserPlans()
+        ])->layout('layouts.frontend');
     }
 }

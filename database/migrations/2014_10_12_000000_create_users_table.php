@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('username', 100)->unique();
             $table->string('is_admin', 10)->default(0);
+            $table->boolean('is_online')->default(0);
+            $table->string('last_activity')->nullable();
             $table->string('credit', 15)->nullable()->default(0);
             $table->string('status', 15)->nullable();
             $table->string('cp_num', 35)->nullable();

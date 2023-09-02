@@ -7,6 +7,9 @@ use App\Http\Livewire\AuthUserComponent;
 use App\Http\Livewire\DashboardComponent;
 use App\Http\Livewire\UserComponent;
 use App\Http\Livewire\Settings;
+use App\Http\Livewire\Messages;
+use App\Http\Livewire\AboutUs;
+use App\Http\Livewire\GameComponent as Game;
 use App\Http\Controllers\TestController;
 
 if (App::environment('production')) {
@@ -14,12 +17,15 @@ if (App::environment('production')) {
 }
 
 Route::get('/', HomeComponent::class)->name('/');
+Route::get('/about-us', AboutUs::class)->name('about-us');
 Route::get('/test', [TestController::class, 'index'])->name('test.index');
 Route::get('/credit', [TestController::class, 'credit'])->name('updateCredit');
 Route::get('/timeNow', [TestController::class, 'timeNow'])->name('timeNow');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', AuthUserComponent::class)->name('home');
+    Route::get('/chat', Messages::class)->name('chat');
+    Route::get('/game', Game::class)->name('game');
     Route::get('/settings', Settings::class)->name('settings');
 });
 

@@ -13,7 +13,7 @@
         margin-bottom: 15px;
     }
     </style>
-        
+
     <div class="container">
         <div class="home_dignity plans">
             <div class="content">
@@ -26,8 +26,8 @@
                             <div class="stat_block_icon">
                             </div>
                             <div class="stat_block_text">
-                                <h1>Plan A</h1>
-                                <span>85%<span style="font-size: 16px;">per 72 hours</span></span>
+                                <h1>Plan 1</h1>
+                                <span>85%<span style="font-size: 16px;">profit in 72 hours</span></span>
                                 <p class="details">Min: $50.00</p>
                                 <p class="details">Plan duration: </p>
                             </div>
@@ -38,8 +38,8 @@
                             <div class="stat_block_icon">
                             </div>
                             <div class="stat_block_text">
-                                <h1>Plan B</h1>
-                                <span>180%<span style="font-size: 16px;">per 72 hours</span></span>
+                                <h1>Plan 2</h1>
+                                <span>107%<span style="font-size: 16px;">profit in 72 hours</span></span>
                                 <p class="details">Min: $70.00</p>
                                 <p class="details">Plan duration: </p>
                             </div>
@@ -50,8 +50,8 @@
                             <div class="stat_block_icon">
                             </div>
                             <div class="stat_block_text">
-                                <h1>Plan C</h1>
-                                <span>200%<span style="font-size: 16px;">per 72 hours</span></span>
+                                <h1>Plan 3</h1>
+                                <span>200%<span style="font-size: 16px;">profit in 72 hours</span></span>
                                 <p class="details">Min: $110.00</p>
                                 <p class="details">Plan duration: </p>
                             </div>
@@ -62,14 +62,13 @@
                             <div class="stat_block_icon">
                             </div>
                             <div class="stat_block_text">
-                                <h1>Plan D</h1>
-                                <span>5%<span style="font-size: 16px;">per hour</span></span>
+                                <h1>Plan 4</h1>
+                                <span>263%<span style="font-size: 16px;">profit in 72 hours</span></span>
                                 <p class="details">Min: $250.00</p>
-                                <p class="details">Plan duration: 72 hours</p>
+                                <p class="details">Plan duration:</p>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -116,7 +115,7 @@
         </div>
 
 
-        <div class="home_crypto_statistic">
+        <div class="home_crypto_statistic" >
             <div class="content">
                 <h1>Today’s Cryptocurrency Statistics</h1>
                 <div class="home_crypto_statistic_table">
@@ -130,8 +129,8 @@
                             <p>Volume (24h)</p>
                         </div>
 
-                        <div class="scroll">
-                            @foreach ($cryptoData as $item)
+                        <div class="scroll" wire:poll="crypto">
+                            @foreach ($this->cryptoData as $item)
                                 <div class="row">
                                     <p>
                                         <img style="width: 40px" src="{{ asset('cryptoIcon').'/'.$this->cryptoIcon()[$item->data->id] }}"
@@ -171,13 +170,13 @@
 
                         </div>-->
                         <div class="footer_copyright right">
-                            <a href="https://coinrost.biz/terms">Terms to use</a>
+                            <a href="#">Terms to use</a>
                         </div>
                         <div class="footer_menu">
-                            <a href="https://coinrost.biz/about">About</a>
-                            <a href="https://coinrost.biz/bounty">Bounty</a>
-                            <a href="https://coinrost.biz/faq">F.A.Q.</a>
-                            <a href="https://coinrost.biz/contact">Contacts</a>
+                            <a href="#">About</a>
+                            <a href="#">Referral</a>
+                            <a href="#">F.A.Q.</a>
+                            <a href="#">Contacts</a>
                         </div>
                     </div>
                 </div>

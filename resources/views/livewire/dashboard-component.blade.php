@@ -101,10 +101,10 @@
                                     </small>
                                 </td>
                                 <td>
-                                    {{ $this->planData($item->plan_id)->description }}
+                                    {{ $this->planData($item->plan_id)->description ?? ''}}
                                 </td>
                                 <td class="project_progress">
-                                {{ $this->planData($item->plan_id)->name }}
+                                    {{ $this->planData($item->plan_id)->name ?? '' }}
                                 </td>
                                 <td class="project-state">
                                     <span class="badge {{ $this->statusBadge()[$item->status] }}">{{ $item->status }}</span>
